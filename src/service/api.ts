@@ -1,6 +1,8 @@
-import { PostInput } from "../types";
+import { Post, PostInput } from "../types";
 import { supabase } from "./superbase-client";
 
+
+// CREATE POST
 export const createPost = async (post: PostInput,imageFile : File) => {
 
     const filePath = `${post.title}-${Date.now()}-${imageFile.name}`
@@ -16,5 +18,17 @@ export const createPost = async (post: PostInput,imageFile : File) => {
     if(error) throw new Error(error.message);
     return data;
 }
+
+// GET POST
+
+export const fetchtPosts = async (): Promise<Post[]> => {
+  const { data, error } = await supabase
+       .from("posts")
+       .select("*")
+       .order("created_at", { ascending: false });
+   if(error) throw new Error(error.message);
+   return data as Post[];
+};
+
 
 
