@@ -1,14 +1,18 @@
 import { ReactElement, useState } from 'react';
 import { Link } from 'react-router';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = (): ReactElement => {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const {signInGitHub,signOut,user} = useAuth()
+
+  const displayName = user?.user_metadata.user_name || user?.email
   return (
     <nav className="fixed top-0 w-full z-40 bg-[rgba(10,10,10,0.8)] backdrop-blur-lg border-b border-white/10 shadow-lg">
     <div className="max-w-5xl mx-auto px-4">
       <div className="flex justify-between items-center h-16">
         <Link to="/" className="font-mono text-xl font-bold text-white">
-          forum<span className="text-purple-500">.app</span>
+          forum<span className="text-purple-500">.@pp</span>
         </Link>
 
         {/* Desktop Links */}
@@ -41,7 +45,7 @@ const Navbar = (): ReactElement => {
 
         {/* Desktop Auth */}
         <div className="hidden md:flex items-center">
-          {/* {user ? (
+           {user ? (
             <div className="flex items-center space-x-4">
               {user.user_metadata?.avatar_url && (
                 <img
@@ -60,12 +64,12 @@ const Navbar = (): ReactElement => {
             </div>
           ) : (
             <button
-              onClick={signInWithGitHub}
+              onClick={signInGitHub}
               className="bg-blue-500 px-3 py-1 rounded"
             >
-              Sign in with GitHub
+              Sign In 
             </button>
-          )} */}
+          )} 
         </div>
 
         {/* Mobile Menu Button */}
